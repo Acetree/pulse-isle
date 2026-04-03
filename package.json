@@ -1,0 +1,57 @@
+{
+  "name": "pulse-isle",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./out/main/index.js",
+  "scripts": {
+    "dev:electron": "electron-vite dev",
+    "build:electron": "electron-vite build",
+    "build:island": "cd dynamic-island && npm run build",
+    "build": "npm run build:island && npm run build:electron",
+    "pack": "npm run build && electron-builder --dir",
+    "dist": "npm run build && electron-builder --mac dmg",
+    "postinstall": "electron-rebuild 2>/dev/null || true"
+  },
+  "dependencies": {
+    "electron-store": "^11.0.2",
+    "lucide-react": "^0.511.0",
+    "motion": "^12.12.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@electron/rebuild": "^4.0.3",
+    "@tailwindcss/vite": "^4.1.14",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@types/ws": "^8.5.10",
+    "@vitejs/plugin-react": "^4.5.2",
+    "electron": "^41.0.2",
+    "electron-builder": "^26.8.1",
+    "electron-vite": "^3.0.0",
+    "tailwindcss": "^4.1.14",
+    "typescript": "~5.8.2"
+  },
+  "build": {
+    "appId": "com.pulseisle.app",
+    "productName": "Pulse Isle",
+    "directories": {
+      "buildResources": "resources",
+      "output": "release"
+    },
+    "files": ["out/**/*"],
+    "extraResources": [
+      { "from": "dynamic-island/out", "to": "dynamic-island/out" },
+      { "from": "dynamic-island/resources", "to": "dynamic-island/resources" },
+      { "from": "hooks", "to": "hooks" }
+    ],
+    "mac": {
+      "icon": "resources/icon.icns",
+      "target": "dmg",
+      "category": "public.app-category.developer-tools"
+    }
+  }
+}
